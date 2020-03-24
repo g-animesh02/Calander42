@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:background="#ffffff">
+        <RelativeLayout
+            android:id="@+id/linear_datepicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Date"
+                android:textSize="30sp"
+                android:hint="30"
+                android:layout_centerHorizontal="true"
+                android:textColorHint="@color/colorAccent"
+                android:textColor="@android:color/white"/>
+
+
+            <CalendarView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/date_picker"
+                android:layout_below="@+id/Date"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:background="#ffffff"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/events"
+            android:layout_width="366dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear_datepicker"
+            android:text="Events"
+            android:background="#ffffff"
+            android:layout_marginStart="31dp"
+            android:layout_marginEnd="31dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="29sp"
+            android:textStyle="italic" />
+
+        <LinearLayout
+            android:id="@+id/reminder"
+            android:layout_marginStart="31dp"
+            android:layout_marginEnd="31dp"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/events"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#ffffff">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#ffffff"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/event_display"
+                android:text="Event"
+                android:textSize="20sp" />
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Type"
+                android:id="@+id/typ"
+                android:textSize="20sp"/>
+        </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        app:srcCompat="@mipmap/plus_floating"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>
