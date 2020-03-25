@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,92 +12,150 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 public class Main2Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
-    private EditText editText;
-    private SQLiteDatabase sqLiteDatabase;
-    private String selectedDate;
+    EditText editText;
+    String selectedDate;
+    String SQLiteDataBaseQueryHolder;
+    SQLiteDatabase sqLiteDatabaseObj;
     public static final String EXTRA_MESSAGE2 ="com.example.calander.extra.MESSAGE";
+    public static final String EXTRA_MESSAGE4 ="com.example.calander.extra.MESSAGE";
     public static final String EXTRA_MESSAGE3 ="com.example.calander.extra.MESSAGE";
     String[] type = { "Event", "Anniversary", "Birthday"};
+    String s="", typo = type[0];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-
-
         Spinner spin = findViewById(R.id.spinner);
         spin.setOnItemSelectedListener(this);
-        ArrayAdapter<String> aa = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,type);
+        ArrayAdapter<String> aa = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, type);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spin.setAdapter(aa);
 
         editText = findViewById(R.id.edittext);
-        mySQLiteDBHandler dbHandler = new mySQLiteDBHandler(this, "CalenderDataBase", null, 1);
-        try {
-     sqLiteDatabase = dbHandler.getWritableDatabase();
-            sqLiteDatabase.execSQL("CREATE TABLE EventCalender(Date TEXT, Event TEXT , Type TEXT)");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
         Intent intent3 = getIntent();
         selectedDate = intent3.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        Intent ck = new Intent(Main2Activity.EXTRA_MESSAGE4);
+        ck.putExtra(EXTRA_MESSAGE4,ck);
+
+        Button button = findViewById(R.id.save);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+
+                SQLiteTableBuild();
+
+                InsertDataIntoSQLiteDatabase();
+
+                Intent i = new Intent(Main2Activity.this,MainActivity.class);
+
+                startActivity(i);
+
+
+            }
+        });
+
 
 
 
     }
-    public void InsertDB(View v) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("Date", selectedDate);
-        String s = editText.getText().toString();
-        contentValues.put("Event", s);
-        sqLiteDatabase.insert("EventCalender", null, contentValues);
-        sqLiteDatabase.close();
-        Intent y = new Intent(Main2Activity.this,MainActivity.class);
-        startActivity(y);
 
+
+
+    public void SQLiteTableBuild(){
+
+        sqLiteDatabaseObj.execSQL("CREATE TABLE IF NOT EXISTS EventCalenders (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Event TEXT, Date TEXT, Type TEXT);");
 
     }
 
 
-    public void readDataBase() {
-        String str,typ;
+    public void InsertDataIntoSQLiteDatabase(){
+        s = editText.getText().toString();
+
+        if(s == null || s.equals(""))
+        {
+
+            Toast.makeText(Main2Activity.this,"Please Fill All The Required Fields.", Toast.LENGTH_LONG).show();
+
+
+        }
+        else {
+
+            SQLiteDataBaseQueryHolder = "INSERT INTO EventCalenders (Event,Date,Type) VALUES('"+s+"', '"+selectedDate+"', '"+typo+"');";
+
+            sqLiteDatabaseObj.execSQL(SQLiteDataBaseQueryHolder);
+
+            Toast.makeText(Main2Activity.this,"Event added successfully", Toast.LENGTH_LONG).show();
+
+        }
+
+    }
+
+    public void InsertDB(String selectedDatee) {
+
+
+
+
+        SQLiteTableBuild();
+
+        InsertDataIntoSQLiteDatabase();
+
+        String str ,typ;
 
         Cursor cursor , cursor1;
-        String query = "SELECT Event FROM EventCalender WHERE Date =" + selectedDate;
-        String query2 = "SELECT Type FROM EventCalender WHERE Date =" + selectedDate;
-        cursor = sqLiteDatabase.rawQuery(query,null);
-        cursor1 = sqLiteDatabase.rawQuery(query2,null);
+
+        String query = "SELECT Event FROM EventCalenders WHERE Date =" + selectedDatee;
+        String query2 = "SELECT Type FROM EventCalenders WHERE Date =" + selectedDatee;
+
+        cursor = sqLiteDatabaseObj.rawQuery(query,null);
+        cursor1 = sqLiteDatabaseObj.rawQuery(query2,null);
+
+
         try {
             cursor.moveToFirst();
             cursor1.moveToFirst();
-            str = (cursor.getString(0));
-            typ =  cursor1.getString(0);
-        } catch (Exception e) {
+
+            str = cursor.getString(cursor.getColumnIndex("Event"));
+
+            typ = cursor1.getString(cursor1.getColumnIndex("Type"));
+
+
+        }
+            catch (Exception e) {
             e.printStackTrace();
             str = "No Event Entered";
-            typ = "No Type";
+            typ = "";
+
         }
-        Intent intent1 = new Intent(Main2Activity.this,MainActivity.class);
-        intent1.putExtra(EXTRA_MESSAGE2,str);
-        intent1.putExtra(EXTRA_MESSAGE3,typ);
-        cursor.close();
-        cursor1.close();
+
+       Intent kk = new Intent(Main2Activity.this,MainActivity.class);
+
+        kk.putExtra(EXTRA_MESSAGE2,str);
+        kk.putExtra(EXTRA_MESSAGE3,typ);
+
+        startActivity(kk);
+
+
+
 
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(getApplicationContext(),type[position] , Toast.LENGTH_LONG).show();
-        if (type[position].equals("Event")){
-
-        }
+        Toast.makeText(getApplicationContext(),type[position] , Toast.LENGTH_SHORT).show();
+        typo = type[position];
     }
 
     @Override

@@ -59,7 +59,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save"
-        android:onClick="InsertDB"
+        android:onClick="onClick"
+        android:id="@+id/save"
         android:layout_alignParentBottom="true"
         android:background="@color/colorAccent"
         android:textColor="@android:color/white"/>

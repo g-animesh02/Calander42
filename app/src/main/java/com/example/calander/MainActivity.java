@@ -26,7 +26,10 @@ public class MainActivity extends AppCompatActivity {
     String selectedDate;
     TextView t,d,e;
     String eventData,eventType;
+    String message;
+    int c = 0;
     String[] m = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+    Main2Activity main2Activity = new Main2Activity();
 
 
     @Override
@@ -36,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         String date = new SimpleDateFormat("dd - MMM - yyyy", Locale.getDefault()).format(new Date());
         d = findViewById(R.id.Date);
         d.setText(date);
-        final Main2Activity main2Activity = new Main2Activity();
         calendarView = findViewById(R.id.date_picker);
         e = findViewById(R.id.event_display);
         t = findViewById(R.id.typ);
@@ -49,12 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
                 d.setText(Integer.toString(dayOfMonth)+" - "+m[month-1]+" - "+year);
 
-                main2Activity.readDataBase();
-                Intent intent2 = getIntent();
-                eventData = intent2.getStringExtra(Main2Activity.EXTRA_MESSAGE2);
-                eventType = intent2.getStringExtra(Main2Activity.EXTRA_MESSAGE3);
-                t.setText(eventType);
-                e.setText(eventData);
 
 
             }
@@ -63,21 +59,24 @@ public class MainActivity extends AppCompatActivity {
 
 
         fab = findViewById(R.id.fab);
-        final String message = selectedDate;
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent i = new Intent(MainActivity.this,Main2Activity.class);
-                i.putExtra(EXTRA_MESSAGE, message);
+                i.putExtra(EXTRA_MESSAGE, selectedDate);
                 startActivity(i);
+
             }
         });
-
-
-
-
-
+    }
+    public void act(View v , String select){
+        main2Activity.InsertDB(select);
+        Intent jj = getIntent();
+        eventData = jj.getStringExtra(Main2Activity.EXTRA_MESSAGE2);
+        eventType = jj.getStringExtra(Main2Activity.EXTRA_MESSAGE3);
+        e.setText(selectedDate);
+        t.setText(eventType);
     }
 
 
