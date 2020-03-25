@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
     String selectedDate;
     TextView t,d,e;
     String eventData,eventType;
-    String message;
-    int c = 0;
+
+
     String[] m = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
     Main2Activity main2Activity = new Main2Activity();
 

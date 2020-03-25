@@ -28,6 +28,7 @@ public class Main2Activity extends AppCompatActivity implements AdapterView.OnIt
     public static final String EXTRA_MESSAGE3 ="com.example.calander.extra.MESSAGE";
     String[] type = { "Event", "Anniversary", "Birthday"};
     String s="", typo = type[0];
+    Button click;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

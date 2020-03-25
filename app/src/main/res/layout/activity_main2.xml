@@ -52,7 +52,7 @@
         android:layout_toRightOf="@+id/type"
         android:layout_toEndOf="@+id/type"
 
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         />
 
     <Button
