@@ -28,7 +28,8 @@ public class Main2Activity extends AppCompatActivity implements AdapterView.OnIt
     public static final String EXTRA_MESSAGE3 ="com.example.calander.extra.MESSAGE";
     String[] type = { "Event", "Anniversary", "Birthday"};
     String s="", typo = type[0];
-    Button click;
+    mySQLiteDBHandler mydbHandler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,45 +45,12 @@ public class Main2Activity extends AppCompatActivity implements AdapterView.OnIt
         editText = findViewById(R.id.edittext);
         Intent intent3 = getIntent();
         selectedDate = intent3.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        Intent ck = new Intent(Main2Activity.EXTRA_MESSAGE4);
-        ck.putExtra(EXTRA_MESSAGE4,ck);
+        mydbHandler = new mySQLiteDBHandler(this);
 
         Button button = findViewById(R.id.save);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-
-
-                SQLiteTableBuild();
-
-                InsertDataIntoSQLiteDatabase();
-
-                Intent i = new Intent(Main2Activity.this,MainActivity.class);
-
-                startActivity(i);
-
-
-            }
-        });
-
-
-
-
     }
-
-
-
-    public void SQLiteTableBuild(){
-
-        sqLiteDatabaseObj.execSQL("CREATE TABLE IF NOT EXISTS EventCalenders (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Event TEXT, Date TEXT, Type TEXT);");
-
-    }
-
-
-    public void InsertDataIntoSQLiteDatabase(){
+    public void InsertDataIntoSQLiteDatabase(View v){
         s = editText.getText().toString();
 
         if(s == null || s.equals(""))
@@ -94,64 +62,20 @@ public class Main2Activity extends AppCompatActivity implements AdapterView.OnIt
         }
         else {
 
-            SQLiteDataBaseQueryHolder = "INSERT INTO EventCalenders (Event,Date,Type) VALUES('"+s+"', '"+selectedDate+"', '"+typo+"');";
+            Boolean t = mydbHandler.insertData(s,selectedDate,typo);
+            if(t) {
+                Toast.makeText(Main2Activity.this, "Event added successfully", Toast.LENGTH_LONG).show();
+                Intent i =new Intent(Main2Activity.this,MainActivity.class);
+                startActivity(i);
+            }
+            else{
+                Toast.makeText(Main2Activity.this, "Failed to add Event", Toast.LENGTH_LONG).show();
 
-            sqLiteDatabaseObj.execSQL(SQLiteDataBaseQueryHolder);
-
-            Toast.makeText(Main2Activity.this,"Event added successfully", Toast.LENGTH_LONG).show();
-
+            }
         }
 
     }
 
-    public void InsertDB(String selectedDatee) {
-
-
-
-
-        SQLiteTableBuild();
-
-        InsertDataIntoSQLiteDatabase();
-
-        String str ,typ;
-
-        Cursor cursor , cursor1;
-
-        String query = "SELECT Event FROM EventCalenders WHERE Date =" + selectedDatee;
-        String query2 = "SELECT Type FROM EventCalenders WHERE Date =" + selectedDatee;
-
-        cursor = sqLiteDatabaseObj.rawQuery(query,null);
-        cursor1 = sqLiteDatabaseObj.rawQuery(query2,null);
-
-
-        try {
-            cursor.moveToFirst();
-            cursor1.moveToFirst();
-
-            str = cursor.getString(cursor.getColumnIndex("Event"));
-
-            typ = cursor1.getString(cursor1.getColumnIndex("Type"));
-
-
-        }
-            catch (Exception e) {
-            e.printStackTrace();
-            str = "No Event Entered";
-            typ = "";
-
-        }
-
-       Intent kk = new Intent(Main2Activity.this,MainActivity.class);
-
-        kk.putExtra(EXTRA_MESSAGE2,str);
-        kk.putExtra(EXTRA_MESSAGE3,typ);
-
-        startActivity(kk);
-
-
-
-
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

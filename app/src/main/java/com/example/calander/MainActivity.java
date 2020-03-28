@@ -20,15 +20,17 @@ import static com.example.calander.Main2Activity.EXTRA_MESSAGE2;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String EXTRA_MESSAGE ="com.example.calander.extra.MESSAGE";
+    public static final String EXTRA_MESSAGE = "com.example.calander.extra.MESSAGE";
     CalendarView calendarView;
     FloatingActionButton fab;
     String selectedDate;
-    TextView t,d,e;
-    String eventData,eventType;
+    private static Boolean RUN_ONCE = true;
+    TextView t, d, e;
+    String eventData, eventType;
+    mySQLiteDBHandler mydb;
 
 
-    String[] m = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+    String[] m = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
     Main2Activity main2Activity = new Main2Activity();
 
 
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         calendarView = findViewById(R.id.date_picker);
         e = findViewById(R.id.event_display);
         t = findViewById(R.id.typ);
+        mydb = new mySQLiteDBHandler(this);
+        selectedDate = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(new Date());
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -49,13 +53,17 @@ public class MainActivity extends AppCompatActivity {
 
                 selectedDate = Integer.toString(year) + Integer.toString(month) + Integer.toString(dayOfMonth);
 
-                d.setText(Integer.toString(dayOfMonth)+" - "+m[month-1]+" - "+year);
-
-
+                d.setText(Integer.toString(dayOfMonth) + " - " + m[month - 1] + " - " + year);
+                if (!RUN_ONCE) {
+                    String final_value = mydb.GetData(selectedDate);
+                    int ind = final_value.indexOf(",");
+                    e.setText(final_value.substring(0, ind));
+                    t.setText(final_value.substring(ind + 1, final_value.length()));
+                }
 
             }
         });
-
+        runOnce();
 
 
         fab = findViewById(R.id.fab);
@@ -63,22 +71,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent i = new Intent(MainActivity.this,Main2Activity.class);
+                Intent i = new Intent(MainActivity.this, Main2Activity.class);
                 i.putExtra(EXTRA_MESSAGE, selectedDate);
                 startActivity(i);
 
             }
         });
     }
-    public void act(View v , String select){
-        main2Activity.InsertDB(select);
-        Intent jj = getIntent();
-        eventData = jj.getStringExtra(Main2Activity.EXTRA_MESSAGE2);
-        eventType = jj.getStringExtra(Main2Activity.EXTRA_MESSAGE3);
-        e.setText(selectedDate);
-        t.setText(eventType);
+
+    private void runOnce() {
+        if (RUN_ONCE) {
+            RUN_ONCE = false;
+
+            // do something
+        }
+
+
     }
-
-
-
 }

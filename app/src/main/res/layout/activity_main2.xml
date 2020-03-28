@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save"
-        android:onClick="onClick"
+        android:onClick="InsertDataIntoSQLiteDatabase"
         android:id="@+id/save"
         android:layout_alignParentBottom="true"
         android:background="@color/colorAccent"

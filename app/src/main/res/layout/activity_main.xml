@@ -65,22 +65,26 @@
                 android:layout_height="match_parent"
                 android:background="#ffffff"/>
 
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Type"
+                android:textColor="@color/colorAccent"
+
+                android:id="@+id/typ"
+                android:textSize="20sp"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/event_display"
-                android:text="Event"
+                android:layout_marginTop="10dp"
+                android:hint="Event"
+                android:textColor="@color/colorAccent"
                 android:textSize="20sp" />
 
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Type"
-                android:layout_marginTop="10dp"
-                android:id="@+id/typ"
-                android:textSize="20sp"/>
         </LinearLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
