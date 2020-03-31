@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@android:color/white</item>
         <item name="colorPrimaryDark">#000000</item>
@@ -10,6 +10,36 @@
     <style name="AppTheme3" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name = "colorPrimary">@color/colorAccent</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="LightTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name = "colorPrimary">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="textColor">@color/colorAccent</item>
+        <item name="metaTextColor">@color/colorAccent</item>
+        <item name="bgColor">@android:color/white</item>
+        <item name="calender_color">@color/colorAccent</item>
+        <item name="text_bg">@android:color/white</item>
+        <item name="bottom">@android:color/white</item>
+        <item name="bottom_text">@color/colorPrimary</item>
+        <item name="bottom_text_eve">@color/colorAccent</item>
+        <item name="cal_col" >@android:color/white</item>
+    </style>
+
+    <style name="DarkTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name = "colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+
+        <item name="textColor">@color/colorPrimary</item>
+        <item name="metaTextColor">@color/colorPrimary</item>
+        <item name="bgColor">@android:color/black</item>
+        <item name="text_bg">@android:color/black</item>
+        <item name="calender_color">@color/colorPrimary</item>
+        <item name="bottom">@color/colorPrimary</item>
+        <item name="bottom_text">@android:color/black</item>
+        <item name="bottom_text_eve">@android:color/white</item>
+        <item name="cal_col">@android:color/white</item>
     </style>
 
 

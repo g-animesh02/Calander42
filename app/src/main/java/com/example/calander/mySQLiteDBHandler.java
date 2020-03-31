@@ -9,8 +9,8 @@ import androidx.annotation.Nullable;
 
 public class mySQLiteDBHandler extends SQLiteOpenHelper {
 
-    public static final String Table_name = "EventCalendersss";
-    public static final String DataBase_name = "Calenders.db";
+    public static final String Table_name = "EventCalenderssss";
+    public static final String DataBase_name = "Calenderss.db";
 
     SQLiteDatabase db;
 
@@ -22,7 +22,7 @@ public class mySQLiteDBHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + Table_name + "(Events TEXT , Date TEXT , Type TEXT)");
+        db.execSQL("CREATE TABLE " + Table_name + "(Events TEXT , Date TEXT , Type TEXT , Description TEXT)");
     }
 
     @Override
@@ -31,10 +31,10 @@ public class mySQLiteDBHandler extends SQLiteOpenHelper {
 
     }
 
-    boolean insertData(String eve, String date, String typ) {
+    boolean insertData(String eve, String date, String typ ,String des) {
         db=this.getWritableDatabase();
 
-        String SQLiteDataBaseQueryHolder = "INSERT INTO " +Table_name +"(Events,Date,Type) VALUES('"+eve+"', '"+date+"', '"+typ+"');";
+        String SQLiteDataBaseQueryHolder = "INSERT INTO " +Table_name +"(Events,Date,Type,Description) VALUES('"+eve+"', '"+date+"', '"+typ+"' , '"+des+"');";
 
         db.execSQL(SQLiteDataBaseQueryHolder);
 
@@ -74,4 +74,32 @@ public class mySQLiteDBHandler extends SQLiteOpenHelper {
         return (str +"," + typ );
 
     }
+
+    public String GetDescription(String selectedDatee) {
+        String str ="No Description Entered" ;
+
+        Cursor cursor ;
+
+        String query = "SELECT Description FROM "+Table_name+" WHERE Date =" + selectedDatee;
+
+        cursor = db.rawQuery(query,null);
+
+
+        try {
+            if (cursor != null && cursor.moveToFirst()){
+
+                str = cursor.getString(cursor.getColumnIndex("Description"));
+
+            }
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            str = "No Description Entered";
+
+        }
+        return (str);
+
+    }
+
 }

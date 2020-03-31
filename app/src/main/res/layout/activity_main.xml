@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="vertical"
-    android:background="#ffffff">
+    android:background="?attr/bgColor">
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/bgColor"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout android:orientation="vertical"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/bgColor">
         <RelativeLayout
             android:id="@+id/linear_datepicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccent">
+            android:background="?attr/calender_color">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -21,78 +31,152 @@
                 android:textSize="30sp"
                 android:hint="30"
                 android:layout_centerHorizontal="true"
-                android:textColorHint="@color/colorAccent"
+                android:textColorHint="?attr/textColor"
                 android:textColor="@android:color/white"/>
+
+
+
+
+
+
+
 
 
             <CalendarView
 
+                android:id="@+id/date_picker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/date_picker"
-                android:layout_below="@+id/Date"
-                android:layout_marginTop="20dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="10dp"
-                android:background="#ffffff"/>
-        </RelativeLayout>
 
+
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                />
+
+        </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/l_e"
+                android:layout_below="@+id/linear_datepicker"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="?attr/bgColor">
         <TextView
             android:id="@+id/events"
             android:layout_width="366dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/linear_datepicker"
             android:text="Events"
-            android:background="#ffffff"
+            android:background="?attr/text_bg"
             android:layout_marginStart="31dp"
             android:layout_marginEnd="31dp"
-            android:textColor="@color/colorAccent"
+            android:textColor="?attr/textColor"
             android:textSize="29sp"
             android:textStyle="italic" />
+            </LinearLayout>
 
-        <LinearLayout
+
+            <LinearLayout
             android:id="@+id/reminder"
-            android:layout_marginStart="31dp"
-            android:layout_marginEnd="31dp"
             android:layout_width="match_parent"
-            android:layout_below="@+id/events"
+            android:layout_below="@+id/l_e"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#ffffff">
+            android:background="?attr/text_bg">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="#ffffff"/>
+
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Type"
-                android:textColor="@color/colorAccent"
-
+                android:textColor="?attr/textColor"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="30dp"
                 android:id="@+id/typ"
                 android:textSize="20sp"/>
-            <TextView
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/event_display"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginStart="15dp"
+                android:background="?attr/text_bg"
+                >
+            <TextView
+                android:id="@+id/event_display"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="50dp"
                 android:hint="Event"
-                android:textColor="@color/colorAccent"
+                android:textColor="?attr/textColor"
                 android:textSize="20sp" />
-
-
+            </ScrollView>
 
         </LinearLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="2dp"
+                android:layout_alignParentRight="true"
+                android:layout_above="@+id/fab2"
+                android:layout_alignParentBottom="true"
+                app:srcCompat="@mipmap/plus_floating" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab2"
         android:layout_width="wrap_content"
+        app:srcCompat="@mipmap/floating_arrow"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        app:srcCompat="@mipmap/plus_floating"
-        android:layout_marginBottom="20dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_toLeftOf="@+id/fab"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="2dp" />
 </RelativeLayout>
+</androidx.core.widget.NestedScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/design_bottom_sheet"
+        android:background="?attr/bottom"
+        app:layout_behavior="@string/bottom_sheet_behavior"
+        android:elevation="4dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/type"
+            android:layout_marginStart="15dp"
+            android:textColor="?attr/bottom_text_eve"
+            android:layout_marginTop="10dp"
+            android:textSize="25sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/eventss"
+            android:layout_marginStart="15dp"
+            android:layout_below="@+id/type"
+            android:textColor="?attr/bottom_text_eve"
+            android:layout_marginTop="10dp"
+            android:textSize="25sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/descri"
+            android:layout_marginStart="15dp"
+            android:layout_below="@+id/eventss"
+            android:textColor="?attr/bottom_text"
+            android:layout_marginTop="10dp"
+            android:textSize="25sp"/>
+
+
+    </RelativeLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

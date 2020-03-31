@@ -4,14 +4,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Main2Activity">
+    tools:context=".Main2Activity"
+    android:background="?attr/bgColor">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Event"
         android:textSize="30sp"
-        android:textColor="@color/colorAccent"
+        android:textColor="?attr/textColor"
         android:id="@+id/heading"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
@@ -23,7 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Add Event"
-        android:textColor="@color/colorAccent"
+        android:textColorHint="?attr/textColor"
+        android:textColor="?attr/textColor"
         android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
@@ -40,7 +42,7 @@
         android:text="Type :"
         android:layout_marginStart="15dp"
         android:textSize="15sp"
-        android:textColor="@color/colorAccent"
+        android:textColor="?attr/textColor"
         android:layout_marginLeft="15dp" />
 
     <Spinner
@@ -51,9 +53,25 @@
         android:layout_below="@+id/edittext"
         android:layout_toRightOf="@+id/type"
         android:layout_toEndOf="@+id/type"
-
+        android:backgroundTint="@android:color/white"
+        android:popupBackground="@android:color/white"
         android:layout_marginTop="15dp"
         />
+    <EditText
+        android:id="@+id/description"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Add Desciption"
+        android:textColor="?attr/textColor"
+        android:layout_marginLeft="15dp"
+        android:textColorHint="?attr/textColor"
+        android:layout_marginStart="15dp"
+        android:inputType="textMultiLine"
+        android:layout_marginEnd="15dp"
+        android:layout_below="@+id/spinner"
+        android:layout_marginRight="15dp"
+    />
 
     <Button
         android:layout_width="match_parent"
@@ -62,6 +80,6 @@
         android:onClick="InsertDataIntoSQLiteDatabase"
         android:id="@+id/save"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorAccent"
+        android:background="?attr/textColor"
         android:textColor="@android:color/white"/>
 </RelativeLayout>

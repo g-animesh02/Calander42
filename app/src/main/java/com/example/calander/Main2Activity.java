@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 public class Main2Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
-    EditText editText;
+    EditText editText,edit;
     String selectedDate;
     String SQLiteDataBaseQueryHolder;
     SQLiteDatabase sqLiteDatabaseObj;
@@ -27,13 +27,28 @@ public class Main2Activity extends AppCompatActivity implements AdapterView.OnIt
     public static final String EXTRA_MESSAGE4 ="com.example.calander.extra.MESSAGE";
     public static final String EXTRA_MESSAGE3 ="com.example.calander.extra.MESSAGE";
     String[] type = { "Event", "Anniversary", "Birthday"};
-    String s="", typo = type[0];
+    String s="", typo = type[0] , descrip = "";
     mySQLiteDBHandler mydbHandler;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent i = getIntent();
+        String dark = i.getStringExtra(MainActivity.EXTRA_MESSAGE0);
+        if (dark.equalsIgnoreCase("dark")){
+            setTheme(R.style.DarkTheme);
+
+            setContentView(R.layout.activity_main2);
+
+        }
+        else{
+            setTheme(R.style.LightTheme);
+
+            setContentView(R.layout.activity_main2);
+
+
+        }
         setContentView(R.layout.activity_main2);
 
         Spinner spin = findViewById(R.id.spinner);
@@ -43,15 +58,15 @@ public class Main2Activity extends AppCompatActivity implements AdapterView.OnIt
         spin.setAdapter(aa);
 
         editText = findViewById(R.id.edittext);
+        edit = findViewById(R.id.description);
         Intent intent3 = getIntent();
         selectedDate = intent3.getStringExtra(MainActivity.EXTRA_MESSAGE);
         mydbHandler = new mySQLiteDBHandler(this);
 
-        Button button = findViewById(R.id.save);
-
     }
     public void InsertDataIntoSQLiteDatabase(View v){
         s = editText.getText().toString();
+        descrip = edit.getText().toString();
 
         if(s == null || s.equals(""))
         {
@@ -62,7 +77,7 @@ public class Main2Activity extends AppCompatActivity implements AdapterView.OnIt
         }
         else {
 
-            Boolean t = mydbHandler.insertData(s,selectedDate,typo);
+            Boolean t = mydbHandler.insertData(s,selectedDate,typo,descrip);
             if(t) {
                 Toast.makeText(Main2Activity.this, "Event added successfully", Toast.LENGTH_LONG).show();
                 Intent i =new Intent(Main2Activity.this,MainActivity.class);
